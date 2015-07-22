@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+function help() {
+cat <<EOF
+DESCRIPTION:
+  Help you start and stop VPN connections from an OSX command line.
+
+USAGE:
+  $(basename $0) [OPTION] <vpn_name>
+
+OPTIONS:
+  status          Show the status of each of your VPN connections.
+  connect         Establish a connection to a VPN.
+  disconnect      Disconnect an established connection.
+EOF
+exit 1
+}
+
+[[ -z $@ ]] && help
+
+for arg in "$@"; do
+  [[ $arg == "--help" ]] && help
+done
+
+case $1 in
+  "status")
+    scutil --nc list |
+      grep -e IPSec -e L2TP |
+      awk '{ print $5,$7,":",$2 }' |
+      sed 's/-->\ //g' |
+      sed 's/[^a-zA-Z0-9:\ \.\-]//g' |
+      sort |
+      sed "s/\ *:/:/g"
+
+    ;;
+  "connect")
+    if [[ -z $2 ]]; then
+      echo "You must provide a VPN to connect"
+      exit 1
+    fi
+    scutil --nc start $2
+    ;;
+  "disconnect")
+    if [[ -z $2 ]]; then
+      echo "You must provide a VPN to disconnect"
+      exit 1
+    fi
+    osascript -e "tell application \"System Events\""                \
+              -e "  tell current location of network preferences"    \
+              -e "    set VPN to service \"$2\""                     \
+              -e "    if exists VPN then disconnect VPN"             \
+              -e "  end tell"                                        \
+              -e "end tell"                                          >/dev/null
+    ;;
+esac
