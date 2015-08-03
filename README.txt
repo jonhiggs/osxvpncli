@@ -6,6 +6,9 @@ SETUP:
   First you must create some VPN connections that you wish to manipulate. You
   must do that from "System Preferences -> Network".
 
+  If you would like working tab-completion, add `bash_completion.d/vpn` to
+  `~/.bash_completion.d/vpn`.
+
 USAGE:
   vpn [OPTION] <vpn_name>
 

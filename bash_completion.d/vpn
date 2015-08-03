@@ -1,0 +1,22 @@
+__connections() {
+  vpn status | cut -d: -f1
+}
+
+_vpn() {
+    local command="$1"
+    local word="$2"
+    local context="$3"
+
+    contexts="status connect disconnect"
+
+    case ${context} in
+      "vpn")                   options=$contexts           ;;
+      "connect"|"disconnect")  options=$(__connections)    ;;
+      "status")                options=""                  ;;
+    esac
+
+    COMPREPLY=($(compgen -W "${options}" -- ${word}))
+    return 0
+}
+
+complete -F _vpn vpn
