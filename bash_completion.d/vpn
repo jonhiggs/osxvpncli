@@ -1,5 +1,9 @@
-__connections() {
-  vpn status | cut -d: -f1
+__connected() {
+  vpn status | grep "Connected$" | cut -d: -f1
+}
+
+__disconnected() {
+  vpn status | grep "Disconnected$" | cut -d: -f1
 }
 
 _vpn() {
@@ -11,7 +15,8 @@ _vpn() {
 
     case ${context} in
       "vpn")                   options=$contexts           ;;
-      "connect"|"disconnect")  options=$(__connections)    ;;
+      "connect")               options=$(__disconnected)   ;;
+      "disconnect")            options=$(__connected)      ;;
       "status")                options=""                  ;;
     esac
 
