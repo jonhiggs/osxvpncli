@@ -16,6 +16,22 @@ EOF
 exit 1
 }
 
+function connections() {
+  scutil --nc list | awk '
+    BEGIN         { FS="\"" }
+    /PPP:(L2TP)/  { print $2 }
+  '
+}
+
+function connection_status() {
+  scutil --nc list | awk '
+    /'$1'/ {
+      gsub(/[\(\)]/,"", $2)
+      print $2
+    }
+  '
+}
+
 [[ -z $@ ]] && help
 
 for arg in "$@"; do
@@ -24,14 +40,10 @@ done
 
 case $1 in
   "status")
-    scutil --nc list |
-      grep -e IPSec -e L2TP |
-      awk '{ print $5,$7,":",$2 }' |
-      sed 's/-->\ //g' |
-      sed 's/[^a-zA-Z0-9:\ \.\-]//g' |
-      sort |
-      sed "s/\ *:/:/g"
-
+    IFS='\n'
+    for connection in $(connections); do
+      echo -e "${connection}\t$(connection_status "${connection}")"
+    done
     ;;
   "connect")
     if [[ -z $2 ]]; then
