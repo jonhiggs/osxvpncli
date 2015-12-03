@@ -14,6 +14,6 @@ If you would like working tab-completion, you can use the completion script in `
       vpn [OPTION] <vpn_name>
 
     OPTIONS:
-      connect         Establish a connection to a VPN.
-      disconnect      Disconnect an established connection.
-      status          Show the status of each of your VPN connections.
+      connect         Establish a connection to a VPN
+      disconnect      Disconnect an established connection
+      status          Show the status of each of your VPN connections
