@@ -19,17 +19,19 @@ exit 1
 function connections() {
   scutil --nc list | awk '
     BEGIN         { FS="\"" }
-    /PPP:(L2TP)/  { print $2 }
-  '
+    /\[(PPP:L2TP)|(IPSec)\]/  { print $2 }
+  ' | sort
 }
 
 function connection_status() {
-  scutil --nc list | awk '
-    /'$1'/ {
-      gsub(/[\(\)]/,"", $2)
+  connection="$1"
+  scutil --nc list | awk -v connection="${connection}" '
+    $0 ~ connection {
+      gsub(/[\(\)]/, "")        # delete the brackets
       print $2
     }
   '
+  return $?
 }
 
 [[ -z $@ ]] && help
@@ -40,9 +42,11 @@ done
 
 case $1 in
   "status")
-    IFS='\n'
     for connection in $(connections); do
-      echo -e "${connection}\t$(connection_status "${connection}")"
+      tabs=$(( ( ${#connection} / 8 - 2 ) * -1 + 1 ))
+      echo -n ${connection}
+      for ((n=0;n<tabs;n++)); do echo -n -e "\t"; done
+      connection_status "${connection}"
     done
     ;;
   "connect")
