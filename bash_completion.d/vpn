@@ -1,8 +1,8 @@
-__connected() {
+__osxvpncli_connected() {
   vpn status | grep "Connected$" | cut -d: -f1
 }
 
-__disconnected() {
+__osxvpncli_disconnected() {
   vpn status | grep "Disconnected$" | cut -d: -f1
 }
 
@@ -14,10 +14,10 @@ _vpn() {
     contexts="status connect disconnect"
 
     case ${context} in
-      "vpn")                   options=$contexts           ;;
-      "connect")               options=$(__disconnected)   ;;
-      "disconnect")            options=$(__connected)      ;;
-      "status")                options=""                  ;;
+      "vpn")                   options=$contexts                     ;;
+      "connect")               options=$(__osxvpncli_disconnected)   ;;
+      "disconnect")            options=$(__osxvpncli_connected)      ;;
+      "status")                options=""                            ;;
     esac
 
     COMPREPLY=($(compgen -W "${options}" -- ${word}))
