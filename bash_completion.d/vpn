@@ -18,6 +18,7 @@ __osvpncli() {
       "connect")               options=$(__osxvpncli_disconnected)   ;;
       "disconnect")            options=$(__osxvpncli_connected)      ;;
       "status")                options=""                            ;;
+      *)                       options=""
     esac
 
     COMPREPLY=($(compgen -W "${options}" -- ${word}))
