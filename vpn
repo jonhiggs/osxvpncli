@@ -9,9 +9,9 @@ USAGE:
   $(basename $0) [OPTION] <vpn_name>
 
 OPTIONS:
-  status          Show the status of each of your VPN connections.
   connect         Establish a connection to a VPN.
   disconnect      Disconnect an established connection.
+  status          Show the status of each of your VPN connections.
 EOF
 exit 1
 }
@@ -41,14 +41,6 @@ for arg in "$@"; do
 done
 
 case $1 in
-  "status")
-    for connection in $(connections); do
-      tabs=$(( ( ${#connection} / 8 - 2 ) * -1 + 1 ))
-      echo -n ${connection}
-      for ((n=0;n<tabs;n++)); do echo -n -e "\t"; done
-      connection_status "${connection}"
-    done
-    ;;
   "connect")
     if [[ -z $2 ]]; then
       echo "You must provide a VPN to connect"
@@ -67,5 +59,13 @@ case $1 in
               -e "    if exists VPN then disconnect VPN"             \
               -e "  end tell"                                        \
               -e "end tell"                                          >/dev/null
+    ;;
+  "status")
+    for connection in $(connections); do
+      tabs=$(( ( ${#connection} / 8 - 2 ) * -1 + 1 ))
+      echo -n ${connection}
+      for ((n=0;n<tabs;n++)); do echo -n -e "\t"; done
+      connection_status "${connection}"
+    done
     ;;
 esac
