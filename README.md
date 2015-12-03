@@ -10,10 +10,10 @@ If you would like working tab-completion, you can use the completion script in `
 
 # Usage
 
-    USAGE:
+    Usage:
       vpn [OPTION] <vpn_name>
 
-    OPTIONS:
-      connect         Establish a connection to a VPN
+    Options:
+      connect         Establish a connection new connection
       disconnect      Disconnect an established connection
-      status          Show the status of each of your VPN connections
+      status          Show the status of each connection

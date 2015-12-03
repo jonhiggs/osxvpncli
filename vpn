@@ -2,16 +2,16 @@
 
 function help() {
 cat <<EOF
-DESCRIPTION:
-  Help you start and stop VPN connections from an OSX command line.
+Description:
+  Connect and disconnect VPN connections from an OSX command line
 
-USAGE:
+Usage:
   $(basename $0) [OPTION] <vpn_name>
 
-OPTIONS:
-  connect         Establish a connection to a VPN
+Options:
+  connect         Establish a connection new connection
   disconnect      Disconnect an established connection
-  status          Show the status of each of your VPN connections
+  status          Show the status of each connection
 EOF
 exit 1
 }
