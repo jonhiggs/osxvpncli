@@ -1,9 +1,9 @@
 __osxvpncli_connected() {
-  vpn status | grep "Connected$" | cut -d: -f1
+  vpn status | grep "Connected$" | awk '{ print $1 }'
 }
 
 __osxvpncli_disconnected() {
-  vpn status | grep "Disconnected$" | cut -d: -f1
+  vpn status | grep "Disconnected$" | awk '{ print $1 }'
 }
 
 _vpn() {
