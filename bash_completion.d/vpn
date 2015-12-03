@@ -6,7 +6,7 @@ __osxvpncli_disconnected() {
   vpn status | grep "Disconnected$" | awk '{ print $1 }'
 }
 
-_vpn() {
+__osvpncli() {
     local command="$1"
     local word="$2"
     local context="$3"
@@ -24,6 +24,6 @@ _vpn() {
     return 0
 }
 
-complete -F _vpn vpn
+complete -F __osvpncli vpn
 
 # vim: ft=sh
