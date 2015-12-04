@@ -25,10 +25,10 @@ __osvpncli() {
     contexts=$(echo -e "status\nconnect\ndisconnect")
 
     case ${context} in
-      "vpn")                   options=$contexts                     ;;
+      "vpn")                   options=$contexts                   ;;
       "connect")               options=$(__osxvpncli_disconnected) ;;
       "disconnect")            options=$(__osxvpncli_connected)    ;;
-      "status")                options=""                            ;;
+      "status")                options=""                          ;;
       *)                       options=""
     esac
 

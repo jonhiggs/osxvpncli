@@ -59,7 +59,7 @@ case $f in
     fi
     osascript -e "tell application \"System Events\""                \
               -e "  tell current location of network preferences"    \
-              -e "    set VPN to service \"$(echo $c | tr -d '\')\""                         \
+              -e "    set VPN to service \"$(echo $c | tr -d '\')\"" \
               -e "    if exists VPN then disconnect VPN"             \
               -e "  end tell"                                        \
               -e "end tell"                                          >/dev/null
