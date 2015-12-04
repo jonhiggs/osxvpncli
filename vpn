@@ -61,11 +61,12 @@ case $1 in
               -e "end tell"                                          >/dev/null
     ;;
   "status")
-    for connection in $(connections); do
-      tabs=$(( ( ${#connection} / 8 - 2 ) * -1 + 1 ))
-      echo -n ${connection}
+    IFS=$'\n'
+    for c in $(connections); do
+      tabs=$(( ( ${#c} / 8 - 2 ) * -1 + 1 ))
+      echo -n ${c}
       for ((n=0;n<tabs;n++)); do echo -n -e "\t"; done
-      connection_status "${connection}"
+      connection_status "${c}"
     done
     ;;
 esac
