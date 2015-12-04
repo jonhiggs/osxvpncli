@@ -1,9 +1,20 @@
 __osxvpncli_connected() {
-  vpn status | grep "Connected$" | awk '{ print $1 }'
+  vpn status | awk '
+    BEGIN { FS="\t" }
+    /Connected$/ {
+      gsub(/\ /, "\\ ");
+      print $1
+    }
+  '
 }
 
 __osxvpncli_disconnected() {
-  vpn status | grep "Disconnected$" | awk '{ print $1 }'
+  vpn status | awk '
+    BEGIN { FS="\t" }
+    /Disconnected$/ {
+      print $1
+    }
+  '
 }
 
 __osvpncli() {
@@ -11,16 +22,17 @@ __osvpncli() {
     local word="$2"
     local context="$3"
 
-    contexts="status connect disconnect"
+    contexts=$(echo -e "status\nconnect\ndisconnect")
 
     case ${context} in
       "vpn")                   options=$contexts                     ;;
-      "connect")               options=$(__osxvpncli_disconnected)   ;;
-      "disconnect")            options=$(__osxvpncli_connected)      ;;
+      "connect")               options=$(__osxvpncli_disconnected) ;;
+      "disconnect")            options=$(__osxvpncli_connected)    ;;
       "status")                options=""                            ;;
       *)                       options=""
     esac
 
+    local IFS=$'\n'
     COMPREPLY=($(compgen -W "${options}" -- ${word}))
     return 0
 }
