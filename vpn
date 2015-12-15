@@ -19,7 +19,7 @@ exit 1
 function connections() {
   scutil --nc list | grep -v Invalid | awk '
     BEGIN         { FS="\"" }
-    /\[(PPP:L2TP)|(IPSec)\]/  { print $2 }
+    /\[(PPP:L2TP)|(IPSec)|(PPP:PPTP)\]/  { print $2 }
   ' | sort
 }
 
