@@ -2,6 +2,7 @@ __osxvpncli_connected() {
   vpn status | awk '
     BEGIN { FS="\t" }
     /Connected$/ {
+      gsub(/\ +Connected/, "")
       gsub(/\ /, "\\ ");
       print $1
     }
@@ -12,6 +13,7 @@ __osxvpncli_disconnected() {
   vpn status | awk '
     BEGIN { FS="\t" }
     /Disconnected$/ {
+      gsub(/\ +Disconnected/, "")
       print $1
     }
   '
