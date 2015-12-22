@@ -31,7 +31,7 @@ function connections() {
 
 function connection_status() {
   IFS=$'\n'
-  for c in $(connections); do
+  for c in ${1:-$(connections)}; do
     echo -e "$c\t$(scutil --nc status "$c" | head -n1)"
   done
 }
@@ -56,6 +56,6 @@ case $f in
               -e "end tell"                                          >/dev/null
   ;;
 
-  "status") connection_status | column -ts $'\t'  ;;
-  *)        usage                                 ;;
+  "status") connection_status "$@" | column -ts $'\t'  ;;
+  *)        usage                                      ;;
 esac
