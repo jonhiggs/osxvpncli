@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-
 function help() {
 cat <<EOF
+osxvpncli 0.1
+https://github.com/jonhiggs/osxvpncli
+
 Description:
   Establish or terminate VPN connections from an OSX command line
 
