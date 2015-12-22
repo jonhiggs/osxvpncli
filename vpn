@@ -30,8 +30,10 @@ function connections() {
 }
 
 function connection_status() {
-  scutil --nc status "$1" | head -n1
-  return $?
+  IFS=$'\n'
+  for c in $(connections); do
+    echo -e "$c\t$(scutil --nc status "$c" | head -n1)"
+  done
 }
 
 [[ -z $@ ]] && help
@@ -61,10 +63,6 @@ case $f in
   ;;
 
   "status")
-    IFS=$'\n'
-    for c in $(connections); do
-      output+="${c}:$(connection_status ${c})\n"
-    done
-    echo -e "${output}" | column -s: -c1 -t
+    connection_status | column -ts $'\t'
   ;;
 esac
