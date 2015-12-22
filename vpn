@@ -17,9 +17,13 @@ exit 1
 }
 
 function connections() {
-  scutil --nc list | grep -v '^...Invalid' | awk '
+  scutil --nc list | awk '
     BEGIN         { FS="\"" }
-    /\[(PPP:L2TP)|(IPSec)|(PPP:PPTP)\]/  { print $2 }
+    /^\*/ {
+      if ( /PPP:L2TP.$/ ) { print $2 }
+      if ( /IPSec.$/ )    { print $2 }
+      if ( /PPP:PPTP.$/ ) { print $2 }
+    }
   ' | sort
 }
 
