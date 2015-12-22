@@ -28,13 +28,7 @@ function connections() {
 }
 
 function connection_status() {
-  connection="$1"
-  scutil --nc list | awk -v connection="${connection}" '
-    $0 ~ connection {
-      gsub(/[\(\)]/, "")        # delete the brackets
-      print $2
-    }
-  '
+  scutil --nc status "$1" | head -n1
   return $?
 }
 
