@@ -51,7 +51,8 @@ case $f in
       exit 1
     fi
     eval "scutil --nc start $c"
-    ;;
+  ;;
+
   "disconnect")
     if [[ -z $c ]]; then
       echo "You must provide a VPN to disconnect"
@@ -63,14 +64,13 @@ case $f in
               -e "    if exists VPN then disconnect VPN"             \
               -e "  end tell"                                        \
               -e "end tell"                                          >/dev/null
-    ;;
+  ;;
+
   "status")
     IFS=$'\n'
     for c in $(connections); do
-      tabs=$(( ( ${#c} / 8 - 2 ) * -1 + 1 ))
-      echo -n ${c}
-      for ((n=0;n<tabs;n++)); do echo -n -e "\t"; done
-      connection_status "${c}"
+      output+="${c}:$(connection_status ${c})\n"
     done
-    ;;
+    echo -e "${output}" | column -s: -c1 -t
+  ;;
 esac
