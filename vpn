@@ -56,8 +56,6 @@ case $f in
               -e "end tell"                                          >/dev/null
   ;;
 
-  "status")
-    connection_status | column -ts $'\t'
-  ;;
+  "status") connection_status | column -ts $'\t'  ;;
   *)        usage                                 ;;
 esac
