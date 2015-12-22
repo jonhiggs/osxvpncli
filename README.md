@@ -11,9 +11,9 @@ If you would like working tab-completion, you can use the completion script in `
 # Usage
 
     Usage:
-      vpn [OPTION] <vpn_name>
+      vpn [OPTION] [vpn_name]
 
     Options:
-      connect         Establish a connection new connection
-      disconnect      Disconnect an established connection
-      status          Show the status of each connection
+      connect     <vpn_name>  Establish a new connection
+      disconnect  [vpn_name]  Terminate established connections
+      status      [vpn_name]  Show connection status
