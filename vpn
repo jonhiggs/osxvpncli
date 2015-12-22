@@ -46,18 +46,12 @@ c=$(echo $@ | sed 's#\ #\\\ #g')
 
 case $f in
   "connect")
-    if [[ -z $c ]]; then
-      echo "You must provide a VPN to connect"
-      exit 1
-    fi
-    eval "scutil --nc start $c"
+    [[ -z $c ]] && echo "VPN not provided" 1>&2 && exit 1
+    eval "scutil --nc start '$c'"
   ;;
 
   "disconnect")
-    if [[ -z $c ]]; then
-      echo "You must provide a VPN to disconnect"
-      exit 1
-    fi
+    [[ -z $c ]] && echo "VPN not provided" 1>&2 && exit 1
     osascript -e "tell application \"System Events\""                \
               -e "  tell current location of network preferences"    \
               -e "    set VPN to service \"$(echo $c | tr -d '\')\"" \
