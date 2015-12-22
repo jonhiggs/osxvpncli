@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-function help() {
+function usage() {
 cat <<EOF
 osxvpncli 0.1
 https://github.com/jonhiggs/osxvpncli
@@ -36,12 +36,6 @@ function connection_status() {
   done
 }
 
-[[ -z $@ ]] && help
-
-for arg in "$@"; do
-  [[ $arg == "--help" ]] && help
-done
-
 f=$1
 shift
 c=$(echo $@ | sed 's#\ #\\\ #g')
@@ -65,4 +59,5 @@ case $f in
   "status")
     connection_status | column -ts $'\t'
   ;;
+  *)        usage                                 ;;
 esac
