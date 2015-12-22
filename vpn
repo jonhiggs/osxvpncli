@@ -20,7 +20,7 @@ exit 1
 
 function connections() {
   scutil --nc list | awk '
-    BEGIN         { FS="\"" }
+    BEGIN { FS="\"" }
     /^\*/ {
       if ( /PPP:L2TP.$/ ) { print $2 }
       if ( /IPSec.$/ )    { print $2 }
