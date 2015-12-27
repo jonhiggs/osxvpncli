@@ -48,7 +48,7 @@ case $f in
 
   "disconnect")
     [[ -z $c ]] && echo "VPN not provided" 1>&2 && exit 1
-    eval "scutil --nc stop '$c'"
+    eval "scutil --nc stop $c"
   ;;
 
   "status") connection_status "$@" | column -ts $'\t'  ;;
