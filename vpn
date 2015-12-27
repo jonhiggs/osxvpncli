@@ -43,7 +43,7 @@ c=$(echo $@ | sed 's#\ #\\\ #g')
 case $f in
   "connect")
     [[ -z $c ]] && echo "VPN not provided" 1>&2 && exit 1
-    eval "scutil --nc start '$c'"
+    eval "scutil --nc start $c"
   ;;
 
   "disconnect")
