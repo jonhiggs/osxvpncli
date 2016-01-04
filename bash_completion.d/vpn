@@ -36,6 +36,9 @@ __osvpncli() {
 
     local IFS=$'\n'
     COMPREPLY=($(compgen -W "${options}" -- ${word}))
+    if [ -n "$COMPREPLY" ]; then
+        COMPREPLY=($(printf "%q\n" "${COMPREPLY[@]}"))
+    fi
     return 0
 }
 

@@ -38,17 +38,16 @@ function connection_status() {
 
 f=$1
 shift
-c=$(echo $@ | sed 's#\ #\\\ #g')
 
 case $f in
   "connect")
-    [[ -z $c ]] && echo "VPN not provided" 1>&2 && exit 1
-    eval "scutil --nc start $c"
+    [[ $# -eq 0 ]] && echo "VPN not provided" 1>&2 && exit 1
+    scutil --nc start "$@"
   ;;
 
   "disconnect")
-    [[ -z $c ]] && echo "VPN not provided" 1>&2 && exit 1
-    eval "scutil --nc stop $c"
+    [[ $# -eq 0 ]] && echo "VPN not provided" 1>&2 && exit 1
+    scutil --nc stop "$@"
   ;;
 
   "status") connection_status "$@" | column -ts $'\t'  ;;
