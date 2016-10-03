@@ -42,7 +42,9 @@ shift
 case $f in
   "connect")
     [[ $# -eq 0 ]] && echo "VPN not provided" 1>&2 && exit 1
-    scutil --nc start "$@"
+    for connection in $@; do
+      scutil --nc start "${connection}"
+    done
   ;;
 
   "disconnect")
