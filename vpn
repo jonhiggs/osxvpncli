@@ -29,6 +29,11 @@ function connections() {
   ' | sort
 }
 
+function connected() {
+  connection_status \
+    | awk -F$'\t' '/Connected$/ { print $1 }'
+}
+
 function connection_status() {
   IFS=$'\n'
   for c in ${1:-$(connections)}; do
@@ -47,15 +52,11 @@ case $f in
 
   "disconnect")
     if [[ $# -eq 0 ]]; then
-      connections=$(connection_status | awk -F$'\t' '/Connected$/ { print $1 }')
+      IFS=$'\n'
+      for c in $(connected); do scutil --nc stop "${c}"; done
     else
-      connections="$@"
+      scutil --nc stop "$@" || exit 1
     fi
-
-    IFS=$'\n'
-    for connection in ${connections}; do
-      scutil --nc stop "${connection}"
-    done
   ;;
 
   "status") connection_status "$@" | column -ts $'\t'  ;;
