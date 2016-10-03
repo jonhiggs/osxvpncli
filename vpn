@@ -46,8 +46,19 @@ case $f in
   ;;
 
   "disconnect")
-    [[ $# -eq 0 ]] && echo "VPN not provided" 1>&2 && exit 1
-    scutil --nc stop "$@"
+    if [[ $# -eq 0 ]]; then
+      connections=$(
+        connection_status \
+          | awk '/Connected$/ { print $1 }' \
+          | tr '\n' ' '
+      )
+    else
+      connections=$@
+    fi
+
+    for connection in ${connections}; do
+      scutil --nc stop "${connection}"
+    done
   ;;
 
   "status") connection_status "$@" | column -ts $'\t'  ;;
