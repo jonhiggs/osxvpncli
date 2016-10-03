@@ -20,6 +20,10 @@ If you would like working tab-completion, you can use the completion script in `
 
 ## Change Log
 
+## Version 0.2.1
+
+- Disconnect all if connection isn't supplied. [#issue 5](https://github.com/jonhiggs/osxvpncli/issues/5)
+
 ## Version 0.2
 
 - Remove support for OS X Yosemite.
