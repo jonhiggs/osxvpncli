@@ -49,7 +49,7 @@ case $f in
 
   "disconnect")
     if [[ $# -eq 0 ]]; then
-      connections=$(connection_status | awk '/Connected$/ { print $1 }')
+      connections=$(connection_status | awk -F$'\t' '/Connected$/ { print $1 }')
     else
       connections="$@"
     fi
