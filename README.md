@@ -16,19 +16,19 @@ Alternatively you can just clone the git repository to your local system:
 
 ```ShellSession
     $ git clone https://github.com/jonhiggs/homebrew-osxvpncli.git <my_path>
-    $ <my_path>/vpn --help
+    $ <my_path>/osxvpncli --help
 ```
 
 ## Setup
 
 Before you can do anything, you must first create the VPN connections that you wish to manipulate though `System Preferences -> Network`.
 
-If you would like working tab-completion, you can use the completion script in `bash_completion.d/vpn`. If you're not sure how to use bash_completion scripts, take a look at [this blog post](http://blog.jeffterrace.com/2012/09/bash-completion-for-mac-os-x.html).
+If you would like working tab-completion, you can use the completion script in `bash_completion.d/osxvpncli`. If you're not sure how to use bash_completion scripts, take a look at [this blog post](http://blog.jeffterrace.com/2012/09/bash-completion-for-mac-os-x.html).
 
 ## Usage
 
     Usage:
-      vpn [OPTION] [vpn_name]
+      osxvpncli [OPTION] [vpn_name]
 
     Options:
       connect     <vpn_name>  Establish a new connection
@@ -39,7 +39,7 @@ If you would like working tab-completion, you can use the completion script in `
 
 ## Version 0.2.2
 
-- Rename `vpn` to `osxvpncli` to avoid being overly rude with naming.
+- Renamed `vpn` to `osxvpncli` to avoid being overly rude with namespace.
 - Document installation with `homebrew`.
 
 ## Version 0.2.1
