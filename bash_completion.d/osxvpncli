@@ -1,5 +1,5 @@
 __osxvpncli_connected() {
-  vpn status | awk '
+  osxvpncli status | awk '
     BEGIN { FS="\t" }
     /Connected$/ {
       gsub(/\ +Connected/, "")
@@ -10,7 +10,7 @@ __osxvpncli_connected() {
 }
 
 __osxvpncli_disconnected() {
-  vpn status | awk '
+  osxvpncli status | awk '
     BEGIN { FS="\t" }
     /Disconnected$/ {
       gsub(/\ +Disconnected/, "")
@@ -27,7 +27,7 @@ __osvpncli() {
     contexts=$(echo -e "status\nconnect\ndisconnect")
 
     case ${context} in
-      "vpn")                   options=$contexts                   ;;
+      "osxvpncli")             options=$contexts                   ;;
       "connect")               options=$(__osxvpncli_disconnected) ;;
       "disconnect")            options=$(__osxvpncli_connected)    ;;
       "status")                options=""                          ;;
@@ -42,6 +42,6 @@ __osvpncli() {
     return 0
 }
 
-complete -F __osvpncli vpn
+complete -F __osvpncli osxvpncli
 
 # vim: ft=sh
