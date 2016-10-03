@@ -4,7 +4,7 @@ This is a wrapper to help you start and stop your macOS VPN connections from the
 
 ## Installation
 
-The easiest method is via homebrew:
+The easiest method is via `homebrew`:
 
 ```ShellSession
     $ brew tap jonhiggs/homebrew-osxvpncli
@@ -12,7 +12,7 @@ The easiest method is via homebrew:
     $ osxvpncli --help
 ```
 
-Alternativally you can just clone the git repository to your local system:
+Alternatively you can just clone the git repository to your local system:
 
 ```ShellSession
     $ git clone https://github.com/jonhiggs/homebrew-osxvpncli.git <my_path>
