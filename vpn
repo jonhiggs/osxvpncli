@@ -49,15 +49,12 @@ case $f in
 
   "disconnect")
     if [[ $# -eq 0 ]]; then
-      connections=$(
-        connection_status \
-          | awk '/Connected$/ { print $1 }' \
-          | tr '\n' ' '
-      )
+      connections=$(connection_status | awk '/Connected$/ { print $1 }')
     else
-      connections=$@
+      connections="$@"
     fi
 
+    IFS=$'\n'
     for connection in ${connections}; do
       scutil --nc stop "${connection}"
     done
