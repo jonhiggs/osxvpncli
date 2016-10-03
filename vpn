@@ -38,22 +38,16 @@ function connection_status() {
 
 f=$1
 shift
-c=$(echo $@ | sed 's#\ #\\\ #g')
 
 case $f in
   "connect")
-    [[ -z $c ]] && echo "VPN not provided" 1>&2 && exit 1
-    eval "scutil --nc start '$c'"
+    [[ $# -eq 0 ]] && echo "VPN not provided" 1>&2 && exit 1
+    scutil --nc start "$@"
   ;;
 
   "disconnect")
-    [[ -z $c ]] && echo "VPN not provided" 1>&2 && exit 1
-    osascript -e "tell application \"System Events\""                \
-              -e "  tell current location of network preferences"    \
-              -e "    set VPN to service \"$(echo $c | tr -d '\')\"" \
-              -e "    if exists VPN then disconnect VPN"             \
-              -e "  end tell"                                        \
-              -e "end tell"                                          >/dev/null
+    [[ $# -eq 0 ]] && echo "VPN not provided" 1>&2 && exit 1
+    scutil --nc stop "$@"
   ;;
 
   "status") connection_status "$@" | column -ts $'\t'  ;;
