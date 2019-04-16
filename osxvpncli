@@ -8,7 +8,7 @@ Description:
   Establish or terminate VPN connections from an OSX command line
 
 Usage:
-  $(basename $0) [OPTION] [vpn_name]
+  $(basename "$0") [OPTION] [vpn_name]
 
 Options:
   connect     <vpn_name>  Establish a new connection
@@ -19,14 +19,13 @@ exit 1
 }
 
 function connections() {
-  scutil --nc list | awk '
-    BEGIN { FS="\"" }
-    /^\*/ {
-      if ( /PPP:L2TP.$/ ) { print $2 }
-      if ( /IPSec.$/ )    { print $2 }
-      if ( /PPP:PPTP.$/ ) { print $2 }
-    }
-  ' | sort
+  scutil --nc list \
+    | awk -F\" '
+        /\[PPP:L2TP\]$/ { print $2 }
+        /\[IPSec\]$/    { print $2 }
+        /\[PPP:PPTP\]$/ { print $2 }
+      ' \
+    | sort
 }
 
 function connected() {
